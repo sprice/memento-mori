@@ -1,0 +1,14 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "vknabel.vscode-swiftformat",
+  "swift.path.swift_driver_path": "/usr/bin/swift",
+  "swift.path.sourcekit_lsp_path": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp",
+  "swift.swiftformat.enable": true,
+  "swift.swiftformat.path": "/usr/local/bin/swiftformat",
+  "swift.lint.enable": true,
+  "swift.lint.path": "/usr/local/bin/swiftlint",
+  "[swift]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "vknabel.vscode-swiftformat"
+  }
+}

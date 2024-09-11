@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -47,6 +47,7 @@
 		B1BE95622C92148500889807 /* Memento MoriUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Memento MoriUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1BE95662C92148500889807 /* Memento_MoriUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memento_MoriUITests.swift; sourceTree = "<group>"; };
 		B1BE95682C92148500889807 /* Memento_MoriUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memento_MoriUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		B1BE95752C92199B00889807 /* Memento-Mori-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Memento-Mori-Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +98,7 @@
 		B1BE95472C92148400889807 /* Memento Mori */ = {
 			isa = PBXGroup;
 			children = (
+				B1BE95752C92199B00889807 /* Memento-Mori-Info.plist */,
 				B1BE95482C92148400889807 /* Memento_MoriApp.swift */,
 				B1BE954A2C92148400889807 /* ContentView.swift */,
 				B1BE954C2C92148400889807 /* Item.swift */,
@@ -212,7 +214,7 @@
 				};
 			};
 			buildConfigurationList = B1BE95402C92148400889807 /* Build configuration list for PBXProject "Memento Mori" */;
-			compatibilityVersion = "Xcode 14.0";
+			compatibilityVersion = "Xcode 15.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -431,6 +433,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Memento Mori/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Memento-Mori-Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -457,6 +460,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Memento Mori/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Memento-Mori-Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

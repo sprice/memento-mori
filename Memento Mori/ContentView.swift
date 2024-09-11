@@ -6,54 +6,42 @@
 //
 
 import SwiftUI
-import SwiftData
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
+    @State private var setting1 = ""
+    @State private var setting2 = ""
+    @State private var setting3 = ""
 
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
-                    }
-                }
-                .onDelete(perform: deleteItems)
-            }
-            .navigationSplitViewColumnWidth(min: 180, ideal: 200)
-            .toolbar {
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-        } detail: {
-            Text("Select an item")
-        }
-    }
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Settings")
+                .font(.title)
+                .padding(.bottom)
 
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
+            SettingRow(label: "Setting 1", value: $setting1)
+            SettingRow(label: "Setting 2", value: $setting2)
+            SettingRow(label: "Setting 3", value: $setting3)
         }
+        .padding()
+        .frame(width: 300)
     }
+}
 
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
-            }
+struct SettingRow: View {
+    let label: String
+    @Binding var value: String
+
+    var body: some View {
+        HStack {
+            Text(label)
+            Spacer()
+            TextField("", text: $value)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .frame(width: 150)
         }
     }
 }
 
 #Preview {
     ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
 }
