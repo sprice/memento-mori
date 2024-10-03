@@ -1,4 +1,4 @@
-- Xcode 15.4
+- Xcode 16.0
 - Project Format: Xcode 15.3
 - Mac OS app
 - Product Name: Memento Mori
