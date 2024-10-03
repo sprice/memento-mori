@@ -10,15 +10,19 @@ import SwiftUI
 
 class StatusBarController: ObservableObject {
     @Published var isSettingsOpen = false
-    @Published var daysLeft = "15589.0"
+    @Published var daysLeft = "0"
+    @AppStorage("deathDate") private var storedDeathDate: Double = Date().timeIntervalSince1970
     private var statusItem: NSStatusItem?
     private var popover: NSPopover?
 
     init() {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+        updateDaysLeft()
         statusItem?.button?.title = "💀 \(daysLeft)"
 
         setupMenus()
+
+        NotificationCenter.default.addObserver(self, selector: #selector(deathDateChanged), name: Notification.Name("DeathDateChanged"), object: nil)
     }
 
     private func setupMenus() {
@@ -38,6 +42,23 @@ class StatusBarController: ObservableObject {
             } else {
                 popover?.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.minY)
             }
+        }
+    }
+
+    @objc func deathDateChanged() {
+        updateDaysLeft()
+    }
+
+    func updateDaysLeft() {
+        let deathDate = Date(timeIntervalSince1970: storedDeathDate)
+        let calendar = Calendar.current
+        let ageComponents = calendar.dateComponents([.year], from: deathDate, to: Date())
+        let currentAge = ageComponents.year ?? 0
+        let lifeExpectancy = 80 // You can adjust this value
+
+        if let daysRemaining = calendar.dateComponents([.day], from: Date(), to: calendar.date(byAdding: .year, value: lifeExpectancy - currentAge, to: Date())!).day {
+            daysLeft = "\(daysRemaining)"
+            statusItem?.button?.title = "💀 \(daysLeft)"
         }
     }
 }

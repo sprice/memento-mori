@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var setting1 = ""
-    @State private var setting2 = ""
-    @State private var setting3 = ""
+    @State private var deathDate = Date()
+    @AppStorage("deathDate") private var storedDeathDate: Double = Date().timeIntervalSince1970
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -18,26 +17,29 @@ struct ContentView: View {
                 .font(.title)
                 .padding(.bottom)
 
-            SettingRow(label: "Setting 1", value: $setting1)
-            SettingRow(label: "Setting 2", value: $setting2)
-            SettingRow(label: "Setting 3", value: $setting3)
+            DatePicker("Death Date", selection: $deathDate, displayedComponents: .date)
+                .datePickerStyle(GraphicalDatePickerStyle())
+                .onChange(of: deathDate) { newValue in
+                    storedDeathDate = newValue.timeIntervalSince1970
+                    NotificationCenter.default.post(name: Notification.Name("DeathDateChanged"), object: nil)
+                }
+
+            Spacer()
+
+            Button("Quick Action") {
+                // Add your quick action functionality here
+                print("Quick action button tapped")
+            }
+            .frame(maxWidth: .infinity)
+            .padding()
+            .background(Color.blue)
+            .foregroundColor(.white)
+            .cornerRadius(10)
         }
         .padding()
-        .frame(width: 300)
-    }
-}
-
-struct SettingRow: View {
-    let label: String
-    @Binding var value: String
-
-    var body: some View {
-        HStack {
-            Text(label)
-            Spacer()
-            TextField("", text: $value)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .frame(width: 150)
+        .frame(width: 300, height: 400)
+        .onAppear {
+            deathDate = Date(timeIntervalSince1970: storedDeathDate)
         }
     }
 }
