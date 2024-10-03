@@ -71,10 +71,18 @@ class StatusBarController: ObservableObject {
     func updateDaysLeft() {
         let deathDate = Date(timeIntervalSince1970: storedDeathDate)
         let calendar = Calendar.current
-        // Calculate the number of days between today and the deathDate
-        if let daysRemaining = calendar.dateComponents([.day], from: Date(), to: deathDate).day {
+
+        let today = Date()
+        let todayComponents = calendar.dateComponents([.month, .day], from: today)
+        let deathComponents = calendar.dateComponents([.month, .day], from: deathDate)
+
+        let isAnniversary = todayComponents.month == deathComponents.month && todayComponents.day == deathComponents.day
+
+        let emoji = isAnniversary ? "🎂" : "💀"
+
+        if let daysRemaining = calendar.dateComponents([.day], from: today, to: deathDate).day {
             daysLeft = "\(daysRemaining)"
-            statusItem?.button?.title = "💀 \(daysLeft)"
+            statusItem?.button?.title = "\(emoji) \(daysLeft)"
         }
     }
 }
