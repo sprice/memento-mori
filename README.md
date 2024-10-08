@@ -2,7 +2,7 @@
 
 ![Memento Mori](./memento_mori.png)
 
-Memento Mori is latin for “Remember (that you have to) die”.
+_Memento Mori_ is latin for “Remember (that you have to) die”.
 
 This is a Mac OS app that displays in your menu bar the estimated number of days you have left to live.
 
