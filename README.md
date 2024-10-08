@@ -12,6 +12,8 @@ I’ve used Aaron Franks’ [Hammerspoon Mortality Plugin](https://github.com/af
 
 Having begun coding with Cursor, I wondered if I could build a Mac OS app with zero Swift knowledge. It turns out you can!
 
+Look! There’s a [directory in here](https://github.com/sprice/memento-mori/tree/main/Memento%20Mori.xcodeproj/xcuserdata/shawnprice.xcuserdatad/xcschemes) with my computer username in it! I have no idea how any of this works!
+
 ## No, The Other Why?
 
 Life is short.
