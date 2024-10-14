@@ -2,8 +2,51 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <!-- Add the following key-value pair inside the <dict>...</dict> section of your Info.plist -->
+    <!-- Application Display Name -->
+    <key>CFBundleName</key>
+    <string>Memento Mori</string>
+
+    <!-- Bundle Identifier -->
+    <key>CFBundleIdentifier</key>
+    <string>shawnprice.Memento-Mori</string>
+
+    <!-- Version Information -->
+    <key>CFBundleVersion</key>
+    <string>1.0</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0</string>
+
+    <!-- Executable Name -->
+    <key>CFBundleExecutable</key>
+    <string>$(EXECUTABLE_NAME)</string>
+
+    <!-- Principal Class -->
+    <key>NSPrincipalClass</key>
+    <string>NSApplication</string>
+
+    <!-- Application Category -->
     <key>LSApplicationCategoryType</key>
     <string>public.app-category.utilities</string>
+
+    <!-- Additional Required Keys -->
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+    </dict>
+
+    <!-- Icon Files (Ensure AppIcon is correctly referenced) -->
+    <key>CFBundleIcons</key>
+    <dict>
+        <key>CFBundlePrimaryIcon</key>
+        <dict>
+            <key>CFBundleIconFiles</key>
+            <array>
+                <string>AppIcon</string>
+            </array>
+            <key>NSRequiresAquaSystemAppearance</key>
+            <false/>
+        </dict>
+    </dict>
 </dict>
 </plist>
