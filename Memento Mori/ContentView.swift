@@ -9,9 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @AppStorage("deathDate") private var storedDeathDate: Double = Date().timeIntervalSince1970
-    // @State private var deathDate: Date = .init(timeIntervalSince1970: storedDeathDate) // Removed
 
-    // Added Binding for deathDate
     private var deathDateBinding: Binding<Date> {
         Binding(
             get: { Date(timeIntervalSince1970: storedDeathDate) },
@@ -23,25 +21,24 @@ struct ContentView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 5) { // Reduced spacing
+        VStack(alignment: .leading, spacing: 5) {
             Text("Settings")
-                .font(.title2) // Increased font size from .headline to .title2
-                .padding(.bottom, 3) // Reduced bottom padding to shift up
+                .font(.title2)
+                .padding(.bottom, 3)
 
-            DatePicker("Death Date", selection: deathDateBinding, in: Date()..., displayedComponents: .date) // Added 'in: Date()...' to restrict dates
+            DatePicker("Death Date", selection: deathDateBinding, in: Date()..., displayedComponents: .date)
                 .datePickerStyle(FieldDatePickerStyle())
-                .onChange(of: deathDateBinding.wrappedValue) { _, _ in // Updated to include oldValue for macOS 14.0 compatibility
-                    // No additional actions needed since binding handles updates
+                .onChange(of: deathDateBinding.wrappedValue) { _, _ in
+                    // Binding handles updates
                 }
-
-            // Spacer() // Removed to eliminate empty space
         }
-        .padding([.leading, .top], 8) // Reduced padding to shift elements left and up
-        .frame(width: 250, height: 130) // Further reduced width and height for a smaller window
-        // Removed onAppear since deathDate is now managed by the binding
+        .padding([.leading, .top], 8)
+        .frame(width: 250, height: 130)
     }
-} // End of ContentView struct
+}
 
-#Preview {
-    ContentView()
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
 }

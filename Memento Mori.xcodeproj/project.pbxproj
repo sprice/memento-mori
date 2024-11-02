@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B15DA9F72CD6A54900F4E5D4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BE954A2C92148400889807 /* ContentView.swift */; };
 		B1BE95492C92148400889807 /* Memento_MoriApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BE95482C92148400889807 /* Memento_MoriApp.swift */; };
-		B1BE954B2C92148400889807 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BE954A2C92148400889807 /* ContentView.swift */; };
 		B1BE954D2C92148400889807 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BE954C2C92148400889807 /* Item.swift */; };
 		B1BE954F2C92148500889807 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1BE954E2C92148500889807 /* Assets.xcassets */; };
 		B1BE95522C92148500889807 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1BE95512C92148500889807 /* Preview Assets.xcassets */; };
@@ -264,9 +264,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B1BE954B2C92148400889807 /* ContentView.swift in Sources */,
 				B1BE954D2C92148400889807 /* Item.swift in Sources */,
 				B1BE95492C92148400889807 /* Memento_MoriApp.swift in Sources */,
+				B15DA9F72CD6A54900F4E5D4 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
