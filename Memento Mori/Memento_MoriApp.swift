@@ -8,60 +8,105 @@
 import AppKit
 import SwiftUI
 
-class StatusBarController: ObservableObject {
+// MARK: - SettingsWindowController
+
+/// A custom window controller to manage the Settings window.
+class SettingsWindowController: NSWindowController {
+    init() {
+        // Initialize the window with desired size and style.
+        let window = NSWindow(
+            contentRect: NSRect(x: 0, y: 0, width: 250, height: 150),
+            styleMask: [.titled, .closable],
+            backing: .buffered,
+            defer: false
+        )
+        window.center()
+        window.setFrameAutosaveName("Settings")
+        window.contentView = NSHostingView(rootView: ContentView())
+        super.init(window: window)
+        self.window?.delegate = self
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+// Conform to NSWindowDelegate to handle window lifecycle events.
+extension SettingsWindowController: NSWindowDelegate {
+    func windowWillClose(_: Notification) {
+        // Post a notification or handle any cleanup if necessary.
+        // For this use-case, no additional action is needed.
+        // If you decide to use a different mechanism to manage the window's lifecycle,
+        // implement the necessary cleanup here.
+    }
+}
+
+// MARK: - StatusBarController
+
+class StatusBarController: NSObject, ObservableObject {
     @Published var daysLeft = "0"
     @AppStorage("deathDate") private var storedDeathDate: Double = Date().timeIntervalSince1970
     private var statusItem: NSStatusItem?
-    // private var popover: NSPopover? // Removed popover
 
-    private var settingsWindow: NSWindow? // Added settings window property
+    // Use NSWindowController to manage the Settings window.
+    private var settingsWindowController: SettingsWindowController?
 
-    init() {
+    override init() {
+        super.init()
+        // Initialize the status bar item with variable length.
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         updateDaysLeft()
         statusItem?.button?.title = "💀 \(daysLeft)"
 
-        setupMenus() // Set up the new menu
+        setupMenus() // Set up the status bar menu.
 
-        NotificationCenter.default.addObserver(self, selector: #selector(deathDateChanged), name: Notification.Name("DeathDateChanged"), object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(deathDateChanged),
+            name: Notification.Name("DeathDateChanged"),
+            object: nil
+        )
     }
 
     private func setupMenus() {
         let menu = NSMenu()
 
-        // Settings menu item
-        let settingsItem = NSMenuItem(title: "Settings", action: #selector(openSettings), keyEquivalent: "") // Removed keyboard shortcut
+        // Settings menu item.
+        let settingsItem = NSMenuItem(title: "Settings", action: #selector(openSettings), keyEquivalent: "")
         settingsItem.target = self
         menu.addItem(settingsItem)
 
-        // Separator
+        // Separator.
         menu.addItem(NSMenuItem.separator())
 
-        // Quit menu item
-        let quitItem = NSMenuItem(title: "Quit", action: #selector(quitApp), keyEquivalent: "") // Removed keyboard shortcut
+        // Quit menu item.
+        let quitItem = NSMenuItem(title: "Quit", action: #selector(quitApp), keyEquivalent: "")
         quitItem.target = self
         menu.addItem(quitItem)
 
-        statusItem?.menu = menu // Assign the menu to the status item
+        statusItem?.menu = menu // Assign the menu to the status item.
     }
 
     @objc func openSettings() {
-        if settingsWindow == nil {
-            settingsWindow = NSWindow(
-                contentRect: NSRect(x: 0, y: 0, width: 250, height: 150), // Reduced width to 250 and height to 150
-                styleMask: [.titled, .closable],
-                backing: .buffered, defer: false
-            )
-            settingsWindow?.center()
-            settingsWindow?.setFrameAutosaveName("Settings")
-            settingsWindow?.contentView = NSHostingView(rootView: ContentView())
+        if settingsWindowController == nil {
+            // Initialize the SettingsWindowController.
+            settingsWindowController = SettingsWindowController()
+            print("Created a new settings window controller.")
+        } else {
+            print("Reusing existing settings window controller.")
         }
-        settingsWindow?.makeKeyAndOrderFront(nil)
-        NSApp.activate(ignoringOtherApps: true) // Bring the window to the front
+
+        // Show the settings window.
+        settingsWindowController?.window?.makeKeyAndOrderFront(nil)
+        NSApp.activate(ignoringOtherApps: true)
+
+        print("Settings Window Type: \(String(describing: settingsWindowController?.window))")
     }
 
     @objc func quitApp() {
-        NSApplication.shared.terminate(nil) // Terminate the app
+        NSApplication.shared.terminate(nil) // Terminate the app.
     }
 
     @objc func deathDateChanged() {
@@ -87,6 +132,8 @@ class StatusBarController: ObservableObject {
     }
 }
 
+// MARK: - AppDelegate
+
 class AppDelegate: NSObject, NSApplicationDelegate {
     var statusBarController: StatusBarController!
 
@@ -94,6 +141,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusBarController = StatusBarController()
     }
 }
+
+// MARK: - Main Application
 
 @main
 struct Memento_MoriApp {
