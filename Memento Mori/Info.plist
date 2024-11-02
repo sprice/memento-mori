@@ -14,7 +14,7 @@
     <key>CFBundleVersion</key>
     <string>1.0</string>
     <key>CFBundleShortVersionString</key>
-    <string>0.0.1</string>
+    <string>0.0.2</string>
 
     <!-- Executable Name -->
     <key>CFBundleExecutable</key>
