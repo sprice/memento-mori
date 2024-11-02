@@ -53,6 +53,9 @@ class StatusBarController: NSObject, ObservableObject {
     // Use NSWindowController to manage the Settings window.
     private var settingsWindowController: SettingsWindowController?
 
+    // Add a Timer property
+    private var timer: Timer?
+
     override init() {
         super.init()
         // Initialize the status bar item with variable length.
@@ -75,6 +78,14 @@ class StatusBarController: NSObject, ObservableObject {
             name: NSWorkspace.didWakeNotification,
             object: nil
         )
+
+        // Initialize and schedule the Timer
+        startTimer()
+    }
+
+    deinit {
+        // Invalidate the timer when the controller is deallocated
+        timer?.invalidate()
     }
 
     @objc func handleWake() {
@@ -126,20 +137,33 @@ class StatusBarController: NSObject, ObservableObject {
 
     func updateDaysLeft() {
         let deathDate = Date(timeIntervalSince1970: storedDeathDate)
-        let calendar = Calendar.current
+        let now = Date()
+        let timeInterval = deathDate.timeIntervalSince(now)
+        let daysRemaining = timeInterval / 86400.0 // Total seconds in a day
+        let formattedDays = String(format: "%.0f", daysRemaining)
 
-        let today = Date()
-        let todayComponents = calendar.dateComponents([.month, .day], from: today)
+        let calendar = Calendar.current
+        let todayComponents = calendar.dateComponents([.month, .day], from: now)
         let deathComponents = calendar.dateComponents([.month, .day], from: deathDate)
 
         let isAnniversary = todayComponents.month == deathComponents.month && todayComponents.day == deathComponents.day
-
         let emoji = isAnniversary ? "🎂" : "💀"
 
-        if let daysRemaining = calendar.dateComponents([.day], from: today, to: deathDate).day {
-            daysLeft = "\(daysRemaining)"
-            statusItem?.button?.title = "\(emoji) \(daysLeft)"
-        }
+        daysLeft = formattedDays
+        statusItem?.button?.title = "\(emoji) \(daysLeft)"
+    }
+
+    // MARK: - Timer Setup
+
+    /// Starts a timer that updates the days left every 10 seconds.
+    private func startTimer() {
+        // Schedule the timer to fire every 10 seconds
+        timer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(timerFired), userInfo: nil, repeats: true)
+    }
+
+    /// Called every time the timer fires.
+    @objc private func timerFired() {
+        updateDaysLeft()
     }
 }
 
