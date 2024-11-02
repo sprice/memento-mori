@@ -68,6 +68,17 @@ class StatusBarController: NSObject, ObservableObject {
             name: Notification.Name("DeathDateChanged"),
             object: nil
         )
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleWake),
+            name: NSWorkspace.didWakeNotification,
+            object: nil
+        )
+    }
+
+    @objc func handleWake() {
+        updateDaysLeft()
     }
 
     private func setupMenus() {
